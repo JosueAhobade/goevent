@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "628631925863",
+    "project_id": "goeventdatabase",
+    "storage_bucket": "goeventdatabase.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:628631925863:android:fdbf555e552e01856b50c2",
+        "android_client_info": {
+          "package_name": "com.example.goevent"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANKDXxms4DekLVTeNDKDSqXrbmABtGwjs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

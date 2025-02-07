@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/filter_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Filtrer par rayon"
+        android:textSize="18sp" />
+
+    <SeekBar
+        android:id="@+id/seekBar_radius"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="50000"
+        android:progress="10000"
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:id="@+id/radius_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Rayon: 10 km"
+        android:textSize="16sp" />
+</LinearLayout>

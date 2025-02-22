@@ -1,34 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:padding="16dp"
     android:background="?android:attr/selectableItemBackground">
 
-    <!-- Espace d'image (Image principale) -->
-
+    <!-- Image principale avec l'icône cœur -->
     <ImageView
-        android:id="@+id/heartIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="8dp"
-        android:clickable="true"
-        android:contentDescription="Like heart"
-        android:focusable="true"
-        android:src="@drawable/ic_heart" />
-
-    <ImageView
+        android:id="@+id/eventImage"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:src="@drawable/img_test"
         android:contentDescription="Event Image"
         android:scaleType="centerCrop"/>
 
+    <!-- Icône cœur (en haut à droite de l'image) -->
+    <ImageView
+        android:id="@+id/heartIcon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignTop="@id/eventImage"
+        android:layout_alignEnd="@id/eventImage"
+        android:layout_margin="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="8dp"
+        android:src="@drawable/ic_heart"
+        android:contentDescription="Like heart"/>
+
     <!-- Titre de l'événement -->
     <TextView
         android:id="@+id/eventTitle"
+        android:layout_below="@id/eventImage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Titre de l'événement"
@@ -39,12 +42,46 @@
     <!-- Description de l'événement -->
     <TextView
         android:id="@+id/eventDescription"
+        android:layout_below="@id/eventTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Description de l'événement"
         android:textSize="14sp"
         android:layout_marginTop="8dp"/>
 
-    <!-- Cœur cliquable -->
+    <!-- Boutons J'aime et Étoiles -->
+    <LinearLayout
+        android:id="@+id/buttonsLayout"
+        android:layout_below="@id/eventDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="12dp"
+        android:gravity="center">
 
-</LinearLayout>
+        <!-- Bouton J'aime -->
+        <Button
+            android:id="@+id/likeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="J’aime"
+            android:padding="8dp"/>
+
+        <!-- Espacement -->
+        <Space
+            android:layout_width="16dp"
+            android:layout_height="wrap_content"/>
+
+        <!-- Bouton Étoiles -->
+        <Button
+            android:id="@+id/starButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Étoiles"
+            android:padding="8dp"/>
+    </LinearLayout>
+    <!-- android:drawableLeft="@drawable/ic_star" -->
+    <!-- android:drawableLeft="@drawable/ic_like" -->
+    <!-- android:background="@drawable/rounded_bg" -->
+
+</RelativeLayout>

@@ -1,5 +1,7 @@
 package com.example.goevent
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -7,6 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -30,13 +34,18 @@ class EventsListFragment : Fragment() {
     private var userLat: Double = 0.0
     private var userLon: Double = 0.0
 
+    companion object {
+        private const val LOCATION_PERMISSION_REQUEST_CODE = 1001
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         val view = inflater.inflate(R.layout.fragment_events_list, container, false)
 
-        // Récupération des éléments UI
+
+        // Récupération des éléments UI du layout du fragment
         btnList = view.findViewById(R.id.button_view1)
         btnMap = view.findViewById(R.id.button_view2)
         viewList = view.findViewById(R.id.view1)
@@ -50,25 +59,71 @@ class EventsListFragment : Fragment() {
         // Initialisation de Firebase
         database = FirebaseDatabase.getInstance().reference.child("evenements")
 
-        // Récupérer la localisation de l'utilisateur
+        // Récupération (éventuelle) de la localisation passée en arguments
         arguments?.let {
             userLat = it.getDouble("USER_LAT", 0.0)
             userLon = it.getDouble("USER_LON", 0.0)
         }
 
-        // Récupération des événements Firebase
+        // Récupération des événements (ici, j'utilise le filtrage sans auto-fetch de localisation)
         fetchEventsFromFirebase()
 
-        eventAdapter = EventAdapter(mutableListOf())  // Initialisation de l'adaptateur avec une liste vide
-        recyclerView.adapter = eventAdapter  // Associer l'adaptateur au RecyclerView
+        // Initialisation de l'adaptateur avec une liste vide
+        eventAdapter = EventAdapter(mutableListOf())
+        recyclerView.adapter = eventAdapter
 
-
-        // Configuration des boutons
+        // Configuration des boutons de switch de vue
         btnList.setOnClickListener { switchView(true) }
         btnMap.setOnClickListener { switchView(false) }
 
 
         return view
+    }
+
+    /**
+     * Exemple de fonction de filtrage (peut être adaptée)
+     */
+    private fun filterEventsByLocation() {
+        val filteredEvents = eventList.filter {
+            val distance = calculateDistance(userLat, userLon, it.location.latitude, it.location.longitude)
+            distance <= 500000 // 50 km
+        }
+
+        Log.d("DEBUG_FILTER", "Nombre d'événements après filtrage : ${filteredEvents.size}")
+
+        // Mettre à jour l'adaptateur avec la liste filtrée
+        eventAdapter.updateEvents(filteredEvents)
+    }
+
+    /**
+     * Calcul de distance entre deux points GPS
+     */
+    private fun calculateDistance(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
+        val earthRadius = 6371000 // en mètres
+        val latDistance = Math.toRadians(lat2 - lat1)
+        val lonDistance = Math.toRadians(lon2 - lon1)
+        val a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2) +
+                Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
+                Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2)
+        val c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+        return earthRadius * c
+    }
+
+    /**
+     * Fonction pour switcher entre la vue liste et la vue carte
+     */
+    private fun switchView(showList: Boolean) {
+        if (showList) {
+            viewList.visibility = View.VISIBLE
+            viewMap.visibility = View.GONE
+            btnList.setBackgroundColor(Color.parseColor("#FF7622"))
+            btnMap.setBackgroundColor(Color.parseColor("#98A8B8"))
+        } else {
+            viewList.visibility = View.GONE
+            viewMap.visibility = View.VISIBLE
+            btnList.setBackgroundColor(Color.parseColor("#98A8B8"))
+            btnMap.setBackgroundColor(Color.parseColor("#FF7622"))
+        }
     }
 
     /**
@@ -95,58 +150,17 @@ class EventsListFragment : Fragment() {
                     }
                 }
 
+                // Mettre à jour la liste des événements
                 eventList = events
-                eventAdapter.updateEvents(events)  // Met à jour l'adaptateur
+
+                // Appliquer le filtrage après la récupération des événements
+                filterEventsByLocation()
             }
 
             override fun onCancelled(error: DatabaseError) {
                 Log.e("FirebaseError", "Erreur Firebase : ${error.message}")
             }
         })
-    }
-
-
-    /**
-     * Fonction pour filtrer les événements en fonction de la distance
-     */
-    private fun filterEventsByLocation() {
-        val filteredEvents = eventList.filter {
-            val distance = calculateDistance(userLat, userLon, it.location.latitude, it.location.longitude)
-            distance <= 50000 // 50 km
-        }
-
-        eventAdapter.updateEvents(filteredEvents) // Mettre à jour l'adaptateur
-    }
-
-    /**
-     * Fonction pour calculer la distance entre deux points GPS
-     */
-    private fun calculateDistance(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
-        val earthRadius = 6371000 // Rayon de la Terre en mètres
-        val latDistance = Math.toRadians(lat2 - lat1)
-        val lonDistance = Math.toRadians(lon2 - lon1)
-        val a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2) +
-                Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
-                Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2)
-        val c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
-        return earthRadius * c
-    }
-
-    /**
-     * Fonction pour switcher entre la vue liste et la vue carte
-     */
-    private fun switchView(showList: Boolean) {
-        if (showList) {
-            viewList.visibility = View.VISIBLE
-            viewMap.visibility = View.GONE
-            btnList.setBackgroundColor(Color.parseColor("#FF7622"))
-            btnMap.setBackgroundColor(Color.parseColor("#98A8B8"))
-        } else {
-            viewList.visibility = View.GONE
-            viewMap.visibility = View.VISIBLE
-            btnList.setBackgroundColor(Color.parseColor("#98A8B8"))
-            btnMap.setBackgroundColor(Color.parseColor("#FF7622"))
-        }
     }
 
 }

@@ -22,7 +22,6 @@ import com.google.android.gms.location.LocationServices
 import com.google.firebase.database.*
 import android.location.Geocoder
 import com.example.goevent.EventsListFragment
-import com.example.goevent.SelectLocationFragment
 import java.util.Locale
 
 class AccueilEvents : AppCompatActivity() {
@@ -39,7 +38,6 @@ class AccueilEvents : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = AccueilEventBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
 
         database = FirebaseDatabase.getInstance().reference.child("evenements")
 
@@ -102,9 +100,6 @@ class AccueilEvents : AppCompatActivity() {
                 Log.e("DEBUG_TAG", "Localisation non disponible")
                 binding.textViewLocation.text = "Localisation non disponible"
 
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.body_container, SelectLocationFragment())
-                    .commit()
             }
         }
     }

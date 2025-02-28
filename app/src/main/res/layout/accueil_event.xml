@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/gris"> <!-- Fond général -->
 
     <!-- Contenu Principal -->
     <LinearLayout
@@ -9,84 +11,75 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="16dp"
+        android:padding="10dp"
         android:layout_above="@id/footer">
 
         <!-- Header -->
-        <LinearLayout
-            android:id="@+id/header"
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="26dp"
-            android:background="@color/orange"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="30dp">
+            android:layout_marginBottom="10dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="6dp">
 
-            <SearchView
-                android:id="@+id/searchView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_weight="3"
-                android:background="@drawable/border"
-                android:iconifiedByDefault="false"
-                android:queryHint="Search..." />
-
-            <Button
-                android:id="@+id/filter_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_weight="1"
-                android:background="@drawable/border"
-                android:drawableStart="@drawable/ic_filter"
-                android:drawablePadding="0dp"
-                android:gravity="center"
-                android:text="g" />
-
-            <SeekBar
-                android:id="@+id/radiusSeekBar"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:max="25000"
-                android:progress="5000"
-                android:visibility="gone" />
+                android:background="@color/orange"
+                android:padding="16dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
 
+                <SearchView
+                    android:id="@+id/searchView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/border"
+                    android:iconifiedByDefault="false"
+                    android:queryHint="Rechercher..." />
 
-            <Button
-                android:id="@+id/location_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_weight="1"
-                android:background="@drawable/border"
-                android:drawableStart="@drawable/ic_localisation"
-                android:drawablePadding="0dp"
-                android:gravity="center"
-                android:text="g" />
-
-
-        </LinearLayout>
+                <SeekBar
+                    android:id="@+id/radiusSeekBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:max="25000"
+                    android:progress="5000"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
         <!-- Body -->
-        <LinearLayout
-            android:id="@+id/body"
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="16dp">
+            app:cardCornerRadius="12dp"
+            app:cardElevation="6dp"
+            android:layout_marginBottom="10dp">
 
-            <TextView
-                android:id="@+id/textViewLocation"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Localisation : Inconnue"
-                android:textSize="16sp"
-                android:textColor="#000000"
-                android:layout_marginBottom="8dp"/>
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:gravity="center_vertical">
 
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/textViewLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Localisation : Inconnue"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/orange"
+                    android:drawableStart="@drawable/ic_localisation"
+                    android:drawableTint="@color/orange"
+                    android:padding="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:drawablePadding="8dp"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
         <!-- Zone dynamique du body -->
         <FrameLayout
@@ -94,55 +87,61 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"/>
-
-
     </LinearLayout>
 
     <!-- Footer -->
-    <LinearLayout
+    <androidx.cardview.widget.CardView
         android:id="@+id/footer"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:orientation="horizontal"
-        android:background="#FFFFFF"
+        android:layout_height="70dp"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="8dp"
         android:layout_alignParentBottom="true"
-        android:gravity="center">
+        android:background="@color/white"
+        android:layout_margin="10dp">
 
-        <!-- Bouton Événements -->
-        <Button
-            android:id="@+id/button_events"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Events"
-            android:drawableLeft="@drawable/ic_calendar"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
             android:gravity="center"
-            android:background="?android:attr/selectableItemBackground"
-            android:textColor="#000000"/>
+            android:padding="10dp">
 
-        <!-- Bouton Accueil -->
-        <Button
-            android:id="@+id/button_home"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Home"
-            android:drawableLeft="@drawable/ic_home"
-            android:gravity="center"
-            android:background="?android:attr/selectableItemBackground"
-            android:textColor="#000000"/>
+            <!-- Bouton Événements -->
+            <Button
+                android:id="@+id/button_events"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Événements"
+                android:drawableLeft="@drawable/ic_calendar"
+                android:gravity="center"
+                android:background="?android:attr/selectableItemBackground"
+                android:textColor="#000000"/>
 
-        <!-- Bouton Profil -->
-        <Button
-            android:id="@+id/button_profile"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Profile"
-            android:drawableLeft="@drawable/ic_profile"
-            android:gravity="center"
-            android:background="?android:attr/selectableItemBackground"
-            android:textColor="#000000"/>
-    </LinearLayout>
+            <!-- Bouton Accueil -->
+            <Button
+                android:id="@+id/button_home"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Accueil"
+                android:drawableLeft="@drawable/ic_home"
+                android:gravity="center"
+                android:background="?android:attr/selectableItemBackground"
+                android:textColor="#000000"/>
 
+            <!-- Bouton Profil -->
+            <Button
+                android:id="@+id/button_profile"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Profil"
+                android:drawableLeft="@drawable/ic_profile"
+                android:gravity="center"
+                android:background="?android:attr/selectableItemBackground"
+                android:textColor="#000000"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 </RelativeLayout>

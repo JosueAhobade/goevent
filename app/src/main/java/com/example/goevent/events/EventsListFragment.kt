@@ -1,7 +1,5 @@
 package com.example.goevent
 
-import android.Manifest
-import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -9,28 +7,36 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.goevent.api.Festival
+import com.example.goevent.api.FestivalResponse
+import com.example.goevent.api.RetrofitClient
 import com.example.goevent.events.Event
 import com.example.goevent.events.EventAdapter
+import com.example.goevent.events.CategoryAdapter
 import com.google.android.gms.maps.MapView
 import com.google.firebase.database.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class EventsListFragment : Fragment() {
 
-    private lateinit var recyclerView: RecyclerView
+    private lateinit var recyclerViewHorizontal: RecyclerView
+    private lateinit var recyclerViewVertical: RecyclerView
     private lateinit var database: DatabaseReference
     private lateinit var eventAdapter: EventAdapter
+    private lateinit var categoryAdapter: CategoryAdapter
     private lateinit var btnList: Button
     private lateinit var btnMap: Button
     private lateinit var viewList: View
     private lateinit var viewMap: View
     private lateinit var mapView: MapView
 
-    private var eventList: MutableList<Event> = mutableListOf()
+    private var eventList: MutableList<Festival> = mutableListOf()
+    private var categoryList: MutableList<String> = mutableListOf()
     private var userLat: Double = 0.0
     private var userLon: Double = 0.0
 
@@ -44,69 +50,98 @@ class EventsListFragment : Fragment() {
     ): View {
         val view = inflater.inflate(R.layout.fragment_events_list, container, false)
 
-
-        // Récupération des éléments UI du layout du fragment
+        // Initialisation des vues
         btnList = view.findViewById(R.id.button_view1)
         btnMap = view.findViewById(R.id.button_view2)
         viewList = view.findViewById(R.id.view1)
         viewMap = view.findViewById(R.id.view2)
         mapView = view.findViewById(R.id.mapView)
 
-        // RecyclerView setup
-        recyclerView = view.findViewById(R.id.recyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        // Initialisation des RecyclerView
+        recyclerViewHorizontal = view.findViewById(R.id.recyclerViewHorizontal)
+        recyclerViewHorizontal.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
-        // Initialisation de Firebase
+        recyclerViewVertical = view.findViewById(R.id.recyclerViewVertical)
+        recyclerViewVertical.layoutManager = LinearLayoutManager(requireContext())
+
+        // Initialisation des adaptateurs
+        eventAdapter = EventAdapter(mutableListOf())
+
+        categoryAdapter = CategoryAdapter(mutableListOf())
+        recyclerViewVertical.adapter = eventAdapter
+
+        // Récupération de Firebase
         database = FirebaseDatabase.getInstance().reference.child("evenements")
 
-        // Récupération (éventuelle) de la localisation passée en arguments
         arguments?.let {
             userLat = it.getDouble("USER_LAT", 0.0)
             userLon = it.getDouble("USER_LON", 0.0)
         }
 
-        // Récupération des événements (ici, j'utilise le filtrage sans auto-fetch de localisation)
-        fetchEventsFromFirebase()
+        fetchFestivals()
 
-        // Initialisation de l'adaptateur avec une liste vide
-        eventAdapter = EventAdapter(mutableListOf())
-        recyclerView.adapter = eventAdapter
+       // fetchEventsFromFirebase()
 
-        // Configuration des boutons de switch de vue
+        // Gestion du changement de vue
         btnList.setOnClickListener { switchView(true) }
         btnMap.setOnClickListener { switchView(false) }
-
 
         return view
     }
 
     /**
-     * Exemple de fonction de filtrage (peut être adaptée)
+     * Fonction pour récupérer les événements depuis Firebase
      */
-    private fun filterEventsByLocation() {
-        val filteredEvents = eventList.filter {
-            val distance = calculateDistance(userLat, userLon, it.location.latitude, it.location.longitude)
-            distance <= 500000 // 50 km
-        }
+    private fun fetchEventsFromFirebase() {
+        database.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val events = mutableListOf<Event>()
 
-        Log.d("DEBUG_FILTER", "Nombre d'événements après filtrage : ${filteredEvents.size}")
+                for (eventSnapshot in snapshot.children) {
+                    val event = eventSnapshot.getValue(Event::class.java)
+                    if (event != null) {
+                        events.add(event)
+                    }
+                }
 
-        // Mettre à jour l'adaptateur avec la liste filtrée
-        eventAdapter.updateEvents(filteredEvents)
+                Log.d("DEBUG_FIREBASE", "Nombre d'événements récupérés : ${events.size}")
+
+                //eventList = events
+
+                // Mise à jour des adaptateurs
+                eventAdapter.updateEvents(eventList)
+                categoryAdapter.updateCategories(categoryList)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("FirebaseError", "Erreur Firebase : ${error.message}")
+            }
+        })
     }
 
     /**
-     * Calcul de distance entre deux points GPS
+     * Fonction pour récupérer les événements depuis l'api de data gouv
      */
-    private fun calculateDistance(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
-        val earthRadius = 6371000 // en mètres
-        val latDistance = Math.toRadians(lat2 - lat1)
-        val lonDistance = Math.toRadians(lon2 - lon1)
-        val a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2) +
-                Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
-                Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2)
-        val c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
-        return earthRadius * c
+    private fun fetchFestivals() {
+        RetrofitClient.instance.getFestivals().enqueue(object : Callback<FestivalResponse> {
+            override fun onResponse(call: Call<FestivalResponse>, response: Response<FestivalResponse>) {
+                if (response.isSuccessful) {
+                    val events = response.body()?.results
+                    if (!events.isNullOrEmpty()) {
+                        eventList.clear()
+                        eventList.addAll(events)
+                        eventAdapter.notifyDataSetChanged()
+                        eventAdapter.updateEvents(eventList)
+                    } else {
+                        Log.e("API_RESULT", "Aucun festival trouvé.")
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<FestivalResponse>, t: Throwable) {
+                Log.e("API_ERROR", "Erreur : ${t.message}")
+            }
+        })
     }
 
     /**
@@ -125,42 +160,4 @@ class EventsListFragment : Fragment() {
             btnMap.setBackgroundColor(Color.parseColor("#FF7622"))
         }
     }
-
-    /**
-     * Fonction pour récupérer les événements depuis Firebase
-     */
-    private fun fetchEventsFromFirebase() {
-        database.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val events = mutableListOf<Event>()
-                for (eventSnapshot in snapshot.children) {
-                    val event = eventSnapshot.getValue(Event::class.java)
-                    if (event != null) {
-                        events.add(event)
-                    }
-                }
-
-                Log.d("DEBUG_FIREBASE", "Nombre d'événements récupérés : ${events.size}")
-
-                if (events.isEmpty()) {
-                    Log.e("DEBUG_FIREBASE", "Aucun événement récupéré ! Vérifie Firebase.")
-                } else {
-                    for (e in events) {
-                        Log.d("DEBUG_FIREBASE", "Événement : ${e.name} - ${e.description}")
-                    }
-                }
-
-                // Mettre à jour la liste des événements
-                eventList = events
-
-                // Appliquer le filtrage après la récupération des événements
-                filterEventsByLocation()
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.e("FirebaseError", "Erreur Firebase : ${error.message}")
-            }
-        })
-    }
-
 }

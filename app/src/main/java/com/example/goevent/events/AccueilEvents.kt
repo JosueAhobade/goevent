@@ -43,7 +43,7 @@ class AccueilEvents : AppCompatActivity() {
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
-        //checkLocationPermission()
+        checkLocationPermission()
     }
 
     override fun onResume() {
@@ -99,6 +99,11 @@ class AccueilEvents : AppCompatActivity() {
             } else {
                 Log.e("DEBUG_TAG", "Localisation non disponible")
                 binding.textViewLocation.text = "Localisation non disponible"
+
+                val fragment = EventsListFragment()
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.body_container, fragment)
+                    .commit()
 
             }
         }

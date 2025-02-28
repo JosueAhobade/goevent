@@ -7,12 +7,15 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.goevent.R
+import com.example.goevent.api.Festival
 
-class EventAdapter(private var eventList: MutableList<Event>) : RecyclerView.Adapter<EventAdapter.EventViewHolder>() {
+class EventAdapter(private var eventList: MutableList<Festival>) : RecyclerView.Adapter<EventAdapter.EventViewHolder>() {
 
     class EventViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val titleTextView: TextView = itemView.findViewById(R.id.eventTitle)
         val descriptionTextView: TextView = itemView.findViewById(R.id.eventDescription)
+        val addressTextView: TextView = itemView.findViewById(R.id.addressText)
+        val periodeTextView: TextView = itemView.findViewById(R.id.periodeText)
         val heartIcon: ImageView = itemView.findViewById(R.id.heartIcon)
     }
 
@@ -24,13 +27,15 @@ class EventAdapter(private var eventList: MutableList<Event>) : RecyclerView.Ada
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
         val event = eventList[position]
 
-        holder.titleTextView.text = event.name // Vérifie que `name` correspond bien à ton modèle `Event`
-        holder.descriptionTextView.text = event.description ?: "Pas de description disponible"
+        holder.titleTextView.text = event.nom_du_festival
+        holder.descriptionTextView.text = event.discipline_dominante ?: "Pas de description disponible"
+        //holder.addressTextView.text = event.adresse.toString() ?: "Adresse inconnue"
+        holder.periodeTextView.text = event.periode_principale_de_deroulement_du_festival ?: "Date inconnnue"
 
 
-        // Gestion du bouton cœur (favoris)
+
         holder.heartIcon.setOnClickListener {
-            // Ajouter une action si nécessaire (ex: enregistrer en favori)
+
         }
     }
 
@@ -38,7 +43,7 @@ class EventAdapter(private var eventList: MutableList<Event>) : RecyclerView.Ada
         return eventList.size
     }
 
-    fun updateEvents(newEvents: List<Event>) {
+    fun updateEvents(newEvents: List<Festival>) {
         eventList.clear()
         eventList.addAll(newEvents)
         notifyDataSetChanged()

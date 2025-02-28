@@ -1,0 +1,3 @@
+- design bout de localisation
+- design de chaque card et faire horizontale et verticale et mettre les images
+- implémenter la recherche

@@ -17,6 +17,7 @@ class EventAdapter(private var eventList: MutableList<Festival>) : RecyclerView.
         val addressTextView: TextView = itemView.findViewById(R.id.addressText)
         val periodeTextView: TextView = itemView.findViewById(R.id.periodeText)
         val heartIcon: ImageView = itemView.findViewById(R.id.heartIcon)
+        val distanceTextView: TextView = itemView.findViewById(R.id.distanceText)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
@@ -26,11 +27,13 @@ class EventAdapter(private var eventList: MutableList<Festival>) : RecyclerView.
 
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
         val event = eventList[position]
+        val dist = event.distance?.toString()
 
         holder.titleTextView.text = event.nom_du_festival
         holder.descriptionTextView.text = event.discipline_dominante ?: "Pas de description disponible"
-        //holder.addressTextView.text = event.adresse.toString() ?: "Adresse inconnue"
+        holder.addressTextView.text = event.adresse ?: "Adresse inconnue"
         holder.periodeTextView.text = event.periode_principale_de_deroulement_du_festival ?: "Date inconnnue"
+        holder.distanceTextView.text = dist ?: "Distance inconnue"
 
 
 

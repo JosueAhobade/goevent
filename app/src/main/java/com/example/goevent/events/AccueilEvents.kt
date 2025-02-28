@@ -48,14 +48,14 @@ class AccueilEvents : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        checkLocationPermission()  // S'assure que la localisation est mise à jour après redémarrage
+        checkLocationPermission()
     }
 
     private fun checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_LOCATION_PERMISSION)
         } else {
-            getLocation()  // Si la permission est déjà accordée, obtenir la localisation
+            getLocation()
         }
     }
 
@@ -76,11 +76,10 @@ class AccueilEvents : AppCompatActivity() {
                     val addresses = geocoder.getFromLocation(userLat, userLon, 1)
                     val cityName = addresses?.get(0)?.locality ?: "Inconnu"
                     val countryName = addresses?.get(0)?.countryName ?: "Inconnu"
-                    val locationText = "$cityName, $countryName"
+                    val postalCode = addresses?.get(0)?.postalCode ?: "Inconnu"
+                    val locationText = "$postalCode $cityName, $countryName"
 
                     binding.textViewLocation.text = "Localisation: $locationText"
-
-                    // Passer la localisation à EventsListFragment
                     val fragment = EventsListFragment().apply {
                         arguments = Bundle().apply {
                             putDouble("USER_LAT", userLat)
@@ -114,7 +113,7 @@ class AccueilEvents : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_LOCATION_PERMISSION) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                getLocation()  // Si la permission est accordée, récupérer la localisation
+                getLocation()
             } else {
                 Toast.makeText(this, "Permission refusée", Toast.LENGTH_SHORT).show()
             }

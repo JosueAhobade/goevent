@@ -11,13 +11,15 @@ data class Festival(
     val sous_categorie_musique_cnm: String?,
     val periode_principale_de_deroulement_du_festival: String?,
     val adresse_e_mail: String?,
-    val adresse: List<Adresse>,
+    val adresse_postale: String?,
     val identifiant: String?,
     val geocodage_xy: GeoLocation?,
     val region_principale_de_deroulement: String?,
     val departement_principal_de_deroulement: String?,
     val commune_principale_de_deroulement: String?,
-    val code_postal_de_la_commune_principale_de_deroulement: String?
+    val code_postal_de_la_commune_principale_de_deroulement: String?,
+    var distance: Double?,
+    var adresse: String?
 
 )
 data class GeoLocation(

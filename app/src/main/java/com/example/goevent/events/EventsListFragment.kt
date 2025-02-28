@@ -1,6 +1,7 @@
 package com.example.goevent
 
 import android.graphics.Color
+import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -21,6 +22,7 @@ import com.google.firebase.database.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.Locale
 
 class EventsListFragment : Fragment() {
 
@@ -78,7 +80,7 @@ class EventsListFragment : Fragment() {
             userLon = it.getDouble("USER_LON", 0.0)
         }
 
-        fetchFestivals()
+        fetchFestivals(userLat, userLon)
 
        // fetchEventsFromFirebase()
 
@@ -122,19 +124,52 @@ class EventsListFragment : Fragment() {
     /**
      * Fonction pour récupérer les événements depuis l'api de data gouv
      */
-    private fun fetchFestivals() {
+    private fun fetchFestivals(userLat: Double, userLon: Double) {
         RetrofitClient.instance.getFestivals().enqueue(object : Callback<FestivalResponse> {
             override fun onResponse(call: Call<FestivalResponse>, response: Response<FestivalResponse>) {
+                if (!isAdded) return // 🔥 Vérifie si le Fragment est encore attaché
+
                 if (response.isSuccessful) {
                     val events = response.body()?.results
                     if (!events.isNullOrEmpty()) {
                         eventList.clear()
+
+                        // 🔥 Vérifie encore une fois avant d'utiliser requireContext()
+                        val geocoder = if (isAdded) Geocoder(requireContext(), Locale.getDefault()) else null
+
+                        events.forEach { event ->
+                            val geo = event.geocodage_xy
+
+                            if (geo != null && geo.lat != null && geo.lon != null) {
+                                event.distance = calculateDistance(userLat, userLon, geo.lat, geo.lon)
+
+                                try {
+                                    // 🔥 Vérifie que le Geocoder est bien initialisé
+                                    if (geocoder != null) {
+                                        val addresses = geocoder.getFromLocation(geo.lat, geo.lon, 1)
+                                        val cityName = addresses?.get(0)?.locality ?: "Inconnu"
+                                        val countryName = addresses?.get(0)?.countryName ?: "Inconnu"
+                                        val postalCode = addresses?.get(0)?.postalCode ?: "Inconnu"
+                                        event.adresse = "$postalCode $cityName, $countryName"
+                                    } else {
+                                        event.adresse = "Localisation indisponible"
+                                    }
+                                } catch (e: Exception) {
+                                    Log.e("DEBUG_TAG", "Erreur localisation", e)
+                                    event.adresse = "Erreur localisation"
+                                }
+                            } else {
+                                Log.e("ERROR_DISTANCE", "Coordonnées GPS manquantes pour ${event.nom_du_festival}")
+                            }
+                        }
+
                         eventList.addAll(events)
-                        eventAdapter.notifyDataSetChanged()
-                        eventAdapter.updateEvents(eventList)
+                        eventAdapter.updateEvents(eventList) // `notifyDataSetChanged()` est déjà dans `updateEvents()`
                     } else {
                         Log.e("API_RESULT", "Aucun festival trouvé.")
                     }
+                } else {
+                    Log.e("API_ERROR", "Réponse non réussie: ${response.code()}")
                 }
             }
 
@@ -143,6 +178,21 @@ class EventsListFragment : Fragment() {
             }
         })
     }
+
+    /**
+     * Fonction pour calculer la distance
+     */
+    private fun calculateDistance(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
+        val earthRadius = 6371000
+        val latDistance = Math.toRadians(lat2 - lat1)
+        val lonDistance = Math.toRadians(lon2 - lon1)
+        val a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2) +
+                Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
+                Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2)
+        val c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+        return (earthRadius * c) / 1000
+    }
+
 
     /**
      * Fonction pour switcher entre la vue liste et la vue carte

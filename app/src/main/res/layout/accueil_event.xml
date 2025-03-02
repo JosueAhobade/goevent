@@ -107,41 +107,43 @@
             android:gravity="center"
             android:padding="10dp">
 
-            <!-- Bouton Événements -->
+
             <Button
                 android:id="@+id/button_events"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Événements"
-                android:drawableLeft="@drawable/ic_calendar"
+                android:drawableTop="@drawable/ic_calendar"
                 android:gravity="center"
                 android:background="?android:attr/selectableItemBackground"
-                android:textColor="#000000"/>
+                android:textColor="#000000"
+                android:paddingTop="8dp" />
 
-            <!-- Bouton Accueil -->
             <Button
                 android:id="@+id/button_home"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Accueil"
-                android:drawableLeft="@drawable/ic_home"
+                android:drawableTop="@drawable/ic_home"
                 android:gravity="center"
                 android:background="?android:attr/selectableItemBackground"
-                android:textColor="#000000"/>
+                android:textColor="#000000"
+                android:paddingTop="8dp" />
 
-            <!-- Bouton Profil -->
             <Button
                 android:id="@+id/button_profile"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Profil"
-                android:drawableLeft="@drawable/ic_profile"
+                android:drawableTop="@drawable/ic_profile"
                 android:gravity="center"
                 android:background="?android:attr/selectableItemBackground"
-                android:textColor="#000000"/>
+                android:textColor="#000000"
+                android:paddingTop="8dp" />
+
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </RelativeLayout>

@@ -21,7 +21,6 @@
             android:contentDescription="Event Image"
             android:scaleType="centerCrop"/>
 
-        <!-- Icône cœur -->
         <ImageView
             android:id="@+id/heartIcon"
             android:layout_width="40dp"
@@ -35,7 +34,6 @@
             android:src="@drawable/ic_heart"
             android:contentDescription="Like heart"/>
 
-        <!-- Détails de l'événement -->
         <LinearLayout
             android:id="@+id/detailsEvent"
             android:layout_width="match_parent"
@@ -97,7 +95,6 @@
                 android:gravity="end"/>
         </LinearLayout>
 
-        <!-- Ligne pointillée -->
         <View
             android:id="@+id/line_dotted"
             android:layout_below="@id/detailsSup"
@@ -107,8 +104,8 @@
             android:alpha="0.5"
             android:layout_marginVertical="8dp"/>
 
-        <!-- Adresse et Google Maps -->
         <LinearLayout
+            android:id="@+id/addressLayout"
             android:layout_below="@+id/line_dotted"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

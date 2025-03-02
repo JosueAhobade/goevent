@@ -1,13 +1,20 @@
 package com.example.goevent
 
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Color
 import android.location.Geocoder
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.LinearLayout
+import android.widget.ProgressBar
+import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -36,6 +43,9 @@ class EventsListFragment : Fragment() {
     private lateinit var viewList: View
     private lateinit var viewMap: View
     private lateinit var mapView: MapView
+    private lateinit var addressTextView: TextView
+    private lateinit var progressBar: ProgressBar
+
 
     private var eventList: MutableList<Festival> = mutableListOf()
     private var categoryList: MutableList<String> = mutableListOf()
@@ -46,6 +56,7 @@ class EventsListFragment : Fragment() {
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1001
     }
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -58,6 +69,9 @@ class EventsListFragment : Fragment() {
         viewList = view.findViewById(R.id.view1)
         viewMap = view.findViewById(R.id.view2)
         mapView = view.findViewById(R.id.mapView)
+        addressTextView = view.findViewById(R.id.addressText)
+        progressBar = view.findViewById(R.id.progressBar)
+
 
         // Initialisation des RecyclerView
         recyclerViewHorizontal = view.findViewById(R.id.recyclerViewHorizontal)
@@ -87,6 +101,7 @@ class EventsListFragment : Fragment() {
         // Gestion du changement de vue
         btnList.setOnClickListener { switchView(true) }
         btnMap.setOnClickListener { switchView(false) }
+
 
         return view
     }
@@ -125,16 +140,19 @@ class EventsListFragment : Fragment() {
      * Fonction pour récupérer les événements depuis l'api de data gouv
      */
     private fun fetchFestivals(userLat: Double, userLon: Double) {
+        progressBar.visibility = View.VISIBLE
+
         RetrofitClient.instance.getFestivals().enqueue(object : Callback<FestivalResponse> {
             override fun onResponse(call: Call<FestivalResponse>, response: Response<FestivalResponse>) {
-                if (!isAdded) return // 🔥 Vérifie si le Fragment est encore attaché
+                if (!isAdded) return
+
+                progressBar.visibility = View.GONE
 
                 if (response.isSuccessful) {
                     val events = response.body()?.results
                     if (!events.isNullOrEmpty()) {
                         eventList.clear()
 
-                        // 🔥 Vérifie encore une fois avant d'utiliser requireContext()
                         val geocoder = if (isAdded) Geocoder(requireContext(), Locale.getDefault()) else null
 
                         events.forEach { event ->
@@ -144,7 +162,6 @@ class EventsListFragment : Fragment() {
                                 event.distance = calculateDistance(userLat, userLon, geo.lat, geo.lon)
 
                                 try {
-                                    // 🔥 Vérifie que le Geocoder est bien initialisé
                                     if (geocoder != null) {
                                         val addresses = geocoder.getFromLocation(geo.lat, geo.lon, 1)
                                         val cityName = addresses?.get(0)?.locality ?: "Inconnu"
@@ -174,6 +191,7 @@ class EventsListFragment : Fragment() {
             }
 
             override fun onFailure(call: Call<FestivalResponse>, t: Throwable) {
+                progressBar.visibility = View.GONE
                 Log.e("API_ERROR", "Erreur : ${t.message}")
             }
         })
@@ -183,15 +201,18 @@ class EventsListFragment : Fragment() {
      * Fonction pour calculer la distance
      */
     private fun calculateDistance(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
-        val earthRadius = 6371000
+        val earthRadius = 6371000.0 // Rayon de la Terre en mètres
         val latDistance = Math.toRadians(lat2 - lat1)
         val lonDistance = Math.toRadians(lon2 - lon1)
         val a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2) +
                 Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
                 Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2)
         val c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
-        return (earthRadius * c) / 1000
+        val distance = (earthRadius * c) / 1000 // Convertir en km
+
+        return String.format(Locale.US, "%.1f", distance).replace(",", ".").toDouble() // 🔥 Remplace la virgule par un point
     }
+
 
 
     /**
@@ -210,4 +231,7 @@ class EventsListFragment : Fragment() {
             btnMap.setBackgroundColor(Color.parseColor("#FF7622"))
         }
     }
+
+
+
 }

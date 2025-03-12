@@ -1,50 +1,137 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="16dp"
-    android:background="?android:attr/selectableItemBackground">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="16dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="6dp"
+    android:background="#F2FFFFFF">  <!-- Blanc avec 95% d'opacité -->
 
-    <!-- Espace d'image (Image principale) -->
-
-    <ImageView
-        android:id="@+id/heartIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="8dp"
-        android:clickable="true"
-        android:contentDescription="Like heart"
-        android:focusable="true"
-        android:src="@drawable/ic_heart" />
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:src="@drawable/img_test"
-        android:contentDescription="Event Image"
-        android:scaleType="centerCrop"/>
-
-    <!-- Titre de l'événement -->
-    <TextView
-        android:id="@+id/eventTitle"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Titre de l'événement"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginTop="8dp"/>
+        android:padding="0dp">
 
-    <!-- Description de l'événement -->
-    <TextView
-        android:id="@+id/eventDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Description de l'événement"
-        android:textSize="14sp"
-        android:layout_marginTop="8dp"/>
+        <!-- Image principale -->
+        <ImageView
+            android:id="@+id/eventImage"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:src="@drawable/img_test"
+            android:contentDescription="Event Image"
+            android:scaleType="centerCrop"/>
 
-    <!-- Cœur cliquable -->
+        <ImageView
+            android:id="@+id/heartIcon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignTop="@id/eventImage"
+            android:layout_alignEnd="@id/eventImage"
+            android:layout_margin="8dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="8dp"
+            android:src="@drawable/ic_heart"
+            android:contentDescription="Like heart"/>
 
-</LinearLayout>
+        <LinearLayout
+            android:id="@+id/detailsEvent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_below="@id/eventImage"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/eventTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Titre de l'événement"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#000000"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/eventDescription"
+            android:layout_below="@id/detailsEvent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Description de l'événement"
+            android:textSize="14sp"
+            android:textColor="#000000"
+            android:padding="8dp"/>
+
+        <!-- Infos Supplémentaires -->
+        <LinearLayout
+            android:id="@+id/detailsSup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@+id/eventDescription"
+            android:gravity="center_vertical"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/periodeText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Date : 10/02/25"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:gravity="start"/>
+
+            <TextView
+                android:id="@+id/distanceText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Distance : 5km"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:gravity="end"/>
+        </LinearLayout>
+
+        <View
+            android:id="@+id/line_dotted"
+            android:layout_below="@id/detailsSup"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:alpha="0.5"
+            android:layout_marginVertical="8dp"/>
+
+        <LinearLayout
+            android:id="@+id/addressLayout"
+            android:layout_below="@+id/line_dotted"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="8dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="openGoogleMaps">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@mipmap/ic_maps_final"
+                android:layout_marginEnd="8dp"/>
+
+            <TextView
+                android:id="@+id/addressText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="123 Rue de Paris, France"
+                android:textSize="14sp"
+                android:textColor="@color/orange"
+                android:textStyle="bold"/>
+        </LinearLayout>
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

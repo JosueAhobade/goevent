@@ -11,4 +11,5 @@
     <color name="gris">#EEEEEE</color>
     <color name="gris_fonce">#98A8B8</color>
     <color name="gris_text">#646982</color>
+    <color name="blue">#0080FF</color>
 </resources>

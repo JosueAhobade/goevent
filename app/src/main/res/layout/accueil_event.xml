@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/gris"> <!-- Fond général -->
 
     <!-- Contenu Principal -->
     <LinearLayout
@@ -9,206 +11,139 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="16dp"
+        android:padding="10dp"
         android:layout_above="@id/footer">
 
         <!-- Header -->
-        <LinearLayout
-            android:id="@+id/header"
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginBottom="16dp">
+            android:layout_marginBottom="10dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="6dp">
 
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="GoEvent"
-                android:textSize="18sp"
-                android:textStyle="bold"/>
-        </LinearLayout>
-
-        <!-- Body -->
-        <LinearLayout
-            android:id="@+id/body"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="16dp">
-
-            <SearchView
-                android:id="@+id/searchView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:queryHint="Search..."
-                android:background="@drawable/border"
-                android:iconifiedByDefault="false"
-                android:layout_marginEnd="8dp"/>
-
-            <Button
-                android:id="@+id/filter_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="g"
-                android:drawableStart="@drawable/ic_filter"
-                android:gravity="center"
-                android:background="@drawable/border"
-                android:layout_marginEnd="8dp"
-                android:drawablePadding="0dp"/>
-
-            <SeekBar
-                android:id="@+id/radiusSeekBar"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:max="25000"
-                android:progress="5000"
-                android:visibility="gone"/>
+                android:background="@color/orange"
+                android:padding="16dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
 
+                <SearchView
+                    android:id="@+id/searchView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/border"
+                    android:iconifiedByDefault="false"
+                    android:queryHint="Rechercher..." />
 
-            <Button
-                android:id="@+id/location_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="g"
-                android:drawableStart="@drawable/ic_localisation"
-                android:gravity="center"
-                android:background="@drawable/border"
-                android:layout_marginEnd="8dp"
-                android:drawablePadding="0dp"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2"
-            android:layout_marginBottom="16dp">
-
-            <!-- Bouton liste -->
-            <Button
-                android:id="@+id/button_view1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Liste"
-                android:textColor="#000000"
-                android:gravity="center"
-                android:background="@drawable/border_liste_carte"
-                android:onClick="switchView"
-                android:tag="view1"/>
-
-            <!-- Bouton carte -->
-            <Button
-                android:id="@+id/button_view2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Carte"
-                android:textColor="#000000"
-                android:gravity="center"
-                android:background="@drawable/border_liste_carte"
-                android:onClick="switchView"
-                android:tag="view2"/>
-        </LinearLayout>
-
-        <FrameLayout
-            android:id="@+id/frameLayout"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="#f0f0f0">
-
-            <!-- Vue Liste -->
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <LinearLayout
-                    android:id="@+id/view1"
+                <SeekBar
+                    android:id="@+id/radiusSeekBar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:visibility="visible">
+                    android:max="25000"
+                    android:progress="5000"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
-                    <!-- Cet espace servira à afficher dynamiquement les événements -->
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-            </ScrollView>
+        <!-- Body -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="6dp"
+            android:layout_marginBottom="10dp">
 
-            <!-- Vue carte -->
             <LinearLayout
-                android:id="@+id/view2"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:visibility="gone">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:gravity="center_vertical">
 
                 <TextView
+                    android:id="@+id/textViewLocation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Contenu de Vue 2"
-                    android:textSize="18sp"/>
+                    android:text="Localisation : Inconnue"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/orange"
+                    android:drawableStart="@drawable/ic_localisation"
+                    android:drawableTint="@color/orange"
+                    android:padding="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:drawablePadding="8dp"/>
             </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
-        </FrameLayout>
-
+        <!-- Zone dynamique du body -->
+        <FrameLayout
+            android:id="@+id/body_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"/>
     </LinearLayout>
 
     <!-- Footer -->
-    <LinearLayout
+    <androidx.cardview.widget.CardView
         android:id="@+id/footer"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:orientation="horizontal"
-        android:background="#FFFFFF"
+        android:layout_height="70dp"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="8dp"
         android:layout_alignParentBottom="true"
-        android:gravity="center">
+        android:background="@color/white"
+        android:layout_margin="10dp">
 
-        <!-- Bouton Événements -->
-        <Button
-            android:id="@+id/button_events"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Events"
-            android:drawableLeft="@drawable/ic_calendar"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
             android:gravity="center"
-            android:background="?android:attr/selectableItemBackground"
-            android:textColor="#000000"/>
+            android:padding="10dp">
 
-        <!-- Bouton Accueil -->
-        <Button
-            android:id="@+id/button_home"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Home"
-            android:drawableLeft="@drawable/ic_home"
-            android:gravity="center"
-            android:background="?android:attr/selectableItemBackground"
-            android:textColor="#000000"/>
 
-        <!-- Bouton Profil -->
-        <Button
-            android:id="@+id/button_profile"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Profile"
-            android:drawableLeft="@drawable/ic_profile"
-            android:gravity="center"
-            android:background="?android:attr/selectableItemBackground"
-            android:textColor="#000000"/>
-    </LinearLayout>
+            <Button
+                android:id="@+id/button_events"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Événements"
+                android:drawableTop="@drawable/ic_calendar"
+                android:gravity="center"
+                android:background="?android:attr/selectableItemBackground"
+                android:textColor="#000000"
+                android:paddingTop="8dp" />
 
+            <Button
+                android:id="@+id/button_home"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Accueil"
+                android:drawableTop="@drawable/ic_home"
+                android:gravity="center"
+                android:background="?android:attr/selectableItemBackground"
+                android:textColor="#000000"
+                android:paddingTop="8dp" />
+
+            <Button
+                android:id="@+id/button_profile"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Profil"
+                android:drawableTop="@drawable/ic_profile"
+                android:gravity="center"
+                android:background="?android:attr/selectableItemBackground"
+                android:textColor="#000000"
+                android:paddingTop="8dp" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 </RelativeLayout>

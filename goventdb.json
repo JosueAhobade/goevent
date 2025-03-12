@@ -19,127 +19,54 @@
       "profilePicture": "https://example.com/images/claire.jpg"
     }
   ],
-  "evenements": [
-    {
-      "id": "e1",
-      "name": "Concert de Jazz",
-      "description": "Un concert de jazz en plein air avec des artistes locaux.",
-      "location": {
-        "latitude": 48.8566,
-        "longitude": 2.3522
-      },
-      "date": "2025-03-15T19:00:00Z",
-      "image": "https://example.com/images/jazz-concert.jpg"
+ "evenements": [
+  {
+    "id": "e1",
+    "name": "Concert de Jazz",
+    "description": "Un concert de jazz en plein air avec des artistes locaux.",
+    "location": {
+      "latitude": 48.8566,
+      "longitude": 2.3522
     },
-    {
-      "id": "e2",
-      "name": "Marché Artisanal",
-      "description": "Un marché proposant des produits artisanaux et locaux.",
-      "location": {
-        "latitude": 43.6108,
-        "longitude": 3.8767
-      },
-      "date": "2025-03-20T10:00:00Z",
-      "image": "https://example.com/images/marche-artisanal.jpg"
+    "date": "2025-03-15T19:00:00Z",
+    "category": "Musique",
+    "image": "https://example.com/images/jazz-concert.jpg"
+  },
+  {
+    "id": "e2",
+    "name": "Marché Artisanal",
+    "description": "Un marché proposant des produits artisanaux et locaux.",
+    "location": {
+      "latitude": 43.6108,
+      "longitude": 3.8767
     },
-    {
-      "id": "e3",
-      "name": "Atelier de Peinture",
-      "description": "Apprenez les bases de la peinture acrylique avec un artiste confirmé.",
-      "location": {
-        "latitude": 45.764,
-        "longitude": 4.8357
-      },
-      "date": "2025-03-25T14:00:00Z",
-      "image": "https://example.com/images/atelier-peinture.jpg"
+    "date": "2025-03-20T10:00:00Z",
+    "category": "Marché",
+    "image": "https://example.com/images/marche-artisanal.jpg"
+  },
+  {
+    "id": "e5",
+    "name": "Conférence Tech",
+    "description": "Rencontrez des experts en technologie et innovation.",
+    "location": {
+      "latitude": 50.6292,
+      "longitude": 3.0573
     },
-    {
-      "id": "e4",
-      "name": "Festival de Cinéma",
-      "description": "Une semaine de projections de films indépendants.",
-      "location": {
-        "latitude": 48.5734,
-        "longitude": 7.7521
-      },
-      "date": "2025-04-01T18:00:00Z",
-      "image": "https://example.com/images/festival-cinema.jpg"
+    "date": "2025-04-10T09:00:00Z",
+    "category": "Conférence",
+    "image": "https://example.com/images/conference-tech.jpg"
+  },
+  {
+    "id": "e8",
+    "name": "Compétition de Skateboard",
+    "description": "Un événement pour les amateurs de skate et les pros.",
+    "location": {
+      "latitude": 48.1173,
+      "longitude": -1.6778
     },
-    {
-      "id": "e5",
-      "name": "Conférence Tech",
-      "description": "Rencontrez des experts en technologie et innovation.",
-      "location": {
-        "latitude": 50.6292,
-        "longitude": 3.0573
-      },
-      "date": "2025-04-10T09:00:00Z",
-      "image": "https://example.com/images/conference-tech.jpg"
-    },
-    {
-      "id": "e6",
-      "name": "Yoga au Parc",
-      "description": "Une séance de yoga en plein air pour tous niveaux.",
-      "location": {
-        "latitude": 44.8378,
-        "longitude": -0.5792
-      },
-      "date": "2025-04-15T08:00:00Z",
-      "image": "https://example.com/images/yoga-parc.jpg"
-    },
-    {
-      "id": "e7",
-      "name": "Exposition d'Art Contemporain",
-      "description": "Découvrez les œuvres d'artistes contemporains locaux et internationaux.",
-      "location": {
-        "latitude": 43.2965,
-        "longitude": 5.3698
-      },
-      "date": "2025-04-20T11:00:00Z",
-      "image": "https://example.com/images/expo-art.jpg"
-    },
-    {
-      "id": "e8",
-      "name": "Compétition de Skateboard",
-      "description": "Un événement pour les amateurs de skate et les pros.",
-      "location": {
-        "latitude": 48.1173,
-        "longitude": -1.6778
-      },
-      "date": "2025-05-05T15:00:00Z",
-      "image": "https://example.com/images/skateboard.jpg"
-    },
-    {
-      "id": "e9",
-      "name": "Randonnée Nocturne",
-      "description": "Explorez la nature sous les étoiles avec un guide expérimenté.",
-      "location": {
-        "latitude": 45.1876,
-        "longitude": 5.7358
-      },
-      "date": "2025-05-10T20:00:00Z",
-      "image": "https://example.com/images/rando-nocturne.jpg"
-    },
-    {
-      "id": "e10",
-      "name": "Atelier Cuisine",
-      "description": "Apprenez à cuisiner des plats traditionnels avec un chef.",
-      "location": {
-        "latitude": 47.2184,
-        "longitude": -1.5536
-      },
-      "date": "2025-05-15T10:00:00Z",
-      "image": "https://example.com/images/atelier-cuisine.jpg"
-    },
-    {
-      "id": "e11",
-      "name": "Tournoi d'Échecs",
-      "description": "Testez vos compétences lors d'un tournoi amical.",
-      "location": {
-        "latitude": 49.4432,
-        "longitude": 1.0993
-      },
-      "date": "2025-05-20T13:00:00Z",
-      "image": "https://example.com/images/tournoi-echecs.jpg"
-    }
-  ]
+    "date": "2025-05-05T15:00:00Z",
+    "category": "Sport",
+    "image": "https://example.com/images/skateboard.jpg"
+  }
+]
 }

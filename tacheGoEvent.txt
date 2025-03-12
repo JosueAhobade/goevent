@@ -1,0 +1,10 @@
+- évenements recommandé ( plus proche )
+- double clique pour aimer
+- implémenter la recherche d'evenements
+- afficher le onboarding qu'à la première utilisation de l'application
+- multilangue
+- page détail de chaque évenements
+- gérer les images
+- affichage des évenements sur une carte gps
+- inscription, connexion, mot de passe oublié et gestion de profil
+- 

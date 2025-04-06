@@ -75,9 +75,7 @@ class AccueilEvents : AppCompatActivity() {
                 try {
                     val addresses = geocoder.getFromLocation(userLat, userLon, 1)
                     val cityName = addresses?.get(0)?.locality ?: "Inconnu"
-                    val countryName = addresses?.get(0)?.countryName ?: "Inconnu"
-                    val postalCode = addresses?.get(0)?.postalCode ?: "Inconnu"
-                    val locationText = "$postalCode $cityName, $countryName"
+                    val locationText = "$cityName"
 
                     binding.textViewLocation.text = "Localisation: $locationText"
                     val fragment = EventsListFragment().apply {

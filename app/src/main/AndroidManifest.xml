@@ -19,8 +19,8 @@
         <activity
             android:name=".intro.IntroActivity"
             android:exported="true"
-            tools:ignore="ExtraText">
-            android:theme="@style/Theme.AppCompat.Light">
+            tools:ignore="ExtraText"
+            android:theme="@style/Theme.Goevent.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -30,26 +30,28 @@
         <!-- OnboardingActivity -->
         <activity
             android:name=".onboarding.OnboardingActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@style/Theme.Goevent.NoActionBar"/>
 
         <!-- IntroAnimatedActivity -->
         <activity
             android:name=".intro.IntroAnimatedActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@style/Theme.Goevent.NoActionBar"/>
 
         <!-- MainActivity -->
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.Goevent" />
+            android:theme="@style/Theme.Goevent.NoActionBar" />
 
         <!-- AccueilEvents -->
         <activity
             android:name=".events.AccueilEvents"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.Goevent"/>
+            android:theme="@style/Theme.Goevent.NoActionBar"/>
 
     </application>
 

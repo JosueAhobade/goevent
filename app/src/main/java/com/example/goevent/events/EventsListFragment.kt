@@ -34,12 +34,10 @@ import java.util.Locale
 class EventsListFragment : Fragment() {
 
     private lateinit var recyclerViewHorizontal: RecyclerView
-    private lateinit var recyclerViewVertical: RecyclerView
+    private lateinit var recyclerViewPopular: RecyclerView
     private lateinit var database: DatabaseReference
     private lateinit var eventAdapter: EventAdapter
     private lateinit var categoryAdapter: CategoryAdapter
-    private lateinit var btnList: Button
-    private lateinit var btnMap: Button
     private lateinit var viewList: View
     private lateinit var viewMap: View
     private lateinit var mapView: MapView
@@ -48,6 +46,7 @@ class EventsListFragment : Fragment() {
 
 
     private var eventList: MutableList<Festival> = mutableListOf()
+    private var eventFiltredList: MutableList<Festival> = mutableListOf()
     private var categoryList: MutableList<String> = mutableListOf()
     private var userLat: Double = 0.0
     private var userLon: Double = 0.0
@@ -64,8 +63,8 @@ class EventsListFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_events_list, container, false)
 
         // Initialisation des vues
-        btnList = view.findViewById(R.id.button_view1)
-        btnMap = view.findViewById(R.id.button_view2)
+        //btnList = view.findViewById(R.id.button_view1)
+        //btnMap = view.findViewById(R.id.button_view2)
         viewList = view.findViewById(R.id.view1)
         viewMap = view.findViewById(R.id.view2)
         mapView = view.findViewById(R.id.mapView)
@@ -74,17 +73,18 @@ class EventsListFragment : Fragment() {
 
 
         // Initialisation des RecyclerView
+        recyclerViewPopular = view.findViewById(R.id.recyclerViewPopular)
+        recyclerViewPopular.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+
         recyclerViewHorizontal = view.findViewById(R.id.recyclerViewHorizontal)
         recyclerViewHorizontal.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
-        recyclerViewVertical = view.findViewById(R.id.recyclerViewVertical)
-        recyclerViewVertical.layoutManager = LinearLayoutManager(requireContext())
-
         // Initialisation des adaptateurs
         eventAdapter = EventAdapter(mutableListOf())
-
         categoryAdapter = CategoryAdapter(mutableListOf())
-        recyclerViewVertical.adapter = eventAdapter
+
+        recyclerViewHorizontal.adapter = eventAdapter
+        recyclerViewPopular.adapter = eventAdapter
 
         // Récupération de Firebase
         database = FirebaseDatabase.getInstance().reference.child("evenements")
@@ -97,10 +97,6 @@ class EventsListFragment : Fragment() {
         fetchFestivals(userLat, userLon)
 
        // fetchEventsFromFirebase()
-
-        // Gestion du changement de vue
-        btnList.setOnClickListener { switchView(true) }
-        btnMap.setOnClickListener { switchView(false) }
 
 
         return view
@@ -218,7 +214,7 @@ class EventsListFragment : Fragment() {
     /**
      * Fonction pour switcher entre la vue liste et la vue carte
      */
-    private fun switchView(showList: Boolean) {
+    /*private fun switchView(showList: Boolean) {
         if (showList) {
             viewList.visibility = View.VISIBLE
             viewMap.visibility = View.GONE
@@ -230,7 +226,7 @@ class EventsListFragment : Fragment() {
             btnList.setBackgroundColor(Color.parseColor("#98A8B8"))
             btnMap.setBackgroundColor(Color.parseColor("#FF7622"))
         }
-    }
+    }*/
 
 
 

@@ -11,27 +11,25 @@ class DetailEvent : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_event_detail)
 
+        // Récupération des données de l'intent
         val title = intent.getStringExtra("title")
         val description = intent.getStringExtra("description")
         val date = intent.getStringExtra("date")
         val distance = intent.getStringExtra("distance")
         val address = intent.getStringExtra("address")
+        val imageRes = intent.getIntExtra("imageRes", R.mipmap.img_autre)
 
-        val titleText = findViewById<TextView>(R.id.detailTitle)
-        val descriptionText = findViewById<TextView>(R.id.detailDescription)
-        val dateText = findViewById<TextView>(R.id.detailDate)
-        val distanceText = findViewById<TextView>(R.id.detailDistance)
-        val addressText = findViewById<TextView>(R.id.detailAddress)
+        // Affectation aux vues
+        findViewById<TextView>(R.id.detailTitle).text = title
+        findViewById<TextView>(R.id.detailDescription).text = description
+        findViewById<TextView>(R.id.detailDate).text = "Date : $date"
+        findViewById<TextView>(R.id.detailDistance).text = "Distance : $distance"
+        findViewById<TextView>(R.id.detailAddress).text = "Adresse : $address"
 
-        titleText.text = title
-        descriptionText.text = description
-        dateText.text = "Date : $date"
-        distanceText.text = "Distance : $distance"
-        addressText.text = "Adresse : $address"
+        // Affectation de l'image
+        findViewById<ImageView>(R.id.detailImage).setImageResource(imageRes)
 
-        val image = findViewById<ImageView>(R.id.detailImage)
-        image.setImageResource(R.drawable.img_test)
-
+        // Toolbar avec flèche retour
         val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

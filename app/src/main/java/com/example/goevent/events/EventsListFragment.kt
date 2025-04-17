@@ -204,7 +204,7 @@ class EventsListFragment : Fragment() {
                 Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
                 Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2)
         val c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
-        val distance = (earthRadius * c) / 1000 // Convertir en km
+        val distance = (earthRadius * c) / 1000
 
         return String.format(Locale.US, "%.1f", distance).replace(",", ".").toDouble() // 🔥 Remplace la virgule par un point
     }

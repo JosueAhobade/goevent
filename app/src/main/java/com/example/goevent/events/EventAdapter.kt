@@ -46,6 +46,17 @@ class EventAdapter(private var eventList: MutableList<Festival>) : RecyclerView.
             openGoogleMaps(holder.itemView.context, address)
         }
 
+        holder.itemView.setOnClickListener {
+            val context = holder.itemView.context
+            val intent = Intent(context, DetailEvent::class.java)
+            intent.putExtra("title", event.nom_du_festival)
+            intent.putExtra("description", event.discipline_dominante)
+            intent.putExtra("date", event.periode_principale_de_deroulement_du_festival)
+            intent.putExtra("distance", dist ?: "Distance inconnue")
+            intent.putExtra("address", event.adresse)
+            context.startActivity(intent)
+        }
+
 
         holder.heartIcon.setOnClickListener {
 
@@ -81,5 +92,7 @@ class EventAdapter(private var eventList: MutableList<Festival>) : RecyclerView.
             Toast.makeText(context, "Adresse non disponible", Toast.LENGTH_SHORT).show()
         }
     }
+
+
 
 }

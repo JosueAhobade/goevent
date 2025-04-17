@@ -53,6 +53,13 @@
             android:label="@string/app_name"
             android:theme="@style/Theme.Goevent.NoActionBar"/>
 
+        <!-- DétailEvents -->
+        <activity
+            android:name=".events.DetailEvent"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Goevent.NoActionBar"/>
+
     </application>
 
 </manifest>

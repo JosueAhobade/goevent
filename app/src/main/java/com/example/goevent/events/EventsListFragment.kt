@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.ProgressBar
+import android.widget.SearchView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -43,6 +44,7 @@ class EventsListFragment : Fragment() {
     private lateinit var mapView: MapView
     private lateinit var addressTextView: TextView
     private lateinit var progressBar: ProgressBar
+    private lateinit var searchView: SearchView
 
 
     private var eventList: MutableList<Festival> = mutableListOf()
@@ -70,6 +72,7 @@ class EventsListFragment : Fragment() {
         mapView = view.findViewById(R.id.mapView)
         addressTextView = view.findViewById(R.id.addressText)
         progressBar = view.findViewById(R.id.progressBar)
+        searchView = requireActivity().findViewById(R.id.searchView)
 
 
         // Initialisation des RecyclerView
@@ -94,12 +97,33 @@ class EventsListFragment : Fragment() {
             userLon = it.getDouble("USER_LON", 0.0)
         }
 
+        // Filtrage en direct depuis le SearchView
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean = false
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                filterEvents(newText ?: "")
+                return true
+            }
+        })
+
+
         fetchFestivals(userLat, userLon)
 
        // fetchEventsFromFirebase()
 
 
         return view
+    }
+
+    private fun filterEvents(query: String) {
+        val filteredList = eventList.filter {
+            it.nom_du_festival!!.contains(query, ignoreCase = true) ||
+                    it.discipline_dominante?.contains(query, ignoreCase = true) == true ||
+                    it.adresse?.contains(query, ignoreCase = true) == true
+        }
+
+        eventAdapter.updateEvents(filteredList)
     }
 
     /**

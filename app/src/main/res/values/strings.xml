@@ -1,10 +1,35 @@
 <resources>
     <string name="app_name">goevent</string>
-    <string name="onboarding_title">All your favorites</string>
-    <string name="onboarding_description">Get all your loved foods in one place, you just place the order we do the rest</string>
+    <string name="onboarding_title_1">Find events near you</string>
+    <string name="onboarding_desc_1">Discover festivals, concerts, and activities just around the corner. Wherever you are, GoEvent connects you to what’s happening nearby!</string>
+
+    <string name="onboarding_title_2">Explore based on your interests</string>
+    <string name="onboarding_desc_2">Music, art, sports, food… Use our smart search and filters to find exactly what excites you.</string>
+
+    <string name="onboarding_title_3">Never miss a good deal again</string>
+    <string name="onboarding_desc_3">Add your favorite events, enable reminders, and always be in the right place at the right time.</string>
+
     <string name="btn_next">Next</string>
-    <string name="kjtdk"></string>
-    <string name="test_text">Good night</string>
+    <string name="btn_skip">Skip</string>
+    <string name="search_label">Search...</string>
+    <string name="location">Location: Unknown</string>
+    <string name="btn_footer_event">Events</string>
+    <string name="btn_footer_accueil">Home</string>
+    <string name="btn_footer_profile">Profile</string>
+    <string name="desc_event_label">Event description</string>
+    <string name="title_label">Title</string>
+    <string name="desc_label">Description</string>
+    <string name="date_label">Date</string>
+    <string name="distance_label">Distance</string>
+    <string name="adresse_label">Address</string>
+    <string name="all_event_label">All events</string>
+    <string name="see_more_label">See more</string>
+    <string name="title_event_label">Event title</string>
+    <string name="date_ex_label">Date: 02/10/25</string>
+    <string name="distance_ex_label">Distance: 5km</string>
+    <string name="adresse_ex_label">123 Rue de Paris, France</string>
+
+
 
     <!-- Style pour un titre -->
     <style name="TitleText">

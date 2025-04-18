@@ -3,9 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/gris"> <!-- Fond général -->
+    android:background="@color/gris">
 
-    <!-- Contenu Principal -->
     <LinearLayout
         android:id="@+id/main_content"
         android:layout_width="match_parent"
@@ -14,7 +13,6 @@
         android:padding="10dp"
         android:layout_above="@id/footer">
 
-        <!-- Header -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -37,7 +35,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/border"
                     android:iconifiedByDefault="false"
-                    android:queryHint="Rechercher..." />
+                    android:queryHint="@string/search_label" />
 
                 <SeekBar
                     android:id="@+id/radiusSeekBar"
@@ -49,7 +47,6 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Body -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -68,7 +65,7 @@
                     android:id="@+id/textViewLocation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Localisation : Inconnue"
+                    android:text="@string/location"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:textColor="@color/orange"
@@ -81,7 +78,6 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Zone dynamique du body -->
         <FrameLayout
             android:id="@+id/body_container"
             android:layout_width="match_parent"
@@ -89,7 +85,6 @@
             android:layout_marginBottom="16dp"/>
     </LinearLayout>
 
-    <!-- Footer -->
     <androidx.cardview.widget.CardView
         android:id="@+id/footer"
         android:layout_width="match_parent"
@@ -107,13 +102,12 @@
             android:gravity="center"
             android:padding="10dp">
 
-
             <Button
                 android:id="@+id/button_events"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Événements"
+                android:text="@string/btn_footer_event"
                 android:drawableTop="@drawable/ic_calendar"
                 android:gravity="center"
                 android:background="?android:attr/selectableItemBackground"
@@ -125,7 +119,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Accueil"
+                android:text="@string/btn_footer_accueil"
                 android:drawableTop="@drawable/ic_home"
                 android:gravity="center"
                 android:background="?android:attr/selectableItemBackground"
@@ -137,7 +131,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Profil"
+                android:text="@string/btn_footer_profile"
                 android:drawableTop="@drawable/ic_profile"
                 android:gravity="center"
                 android:background="?android:attr/selectableItemBackground"

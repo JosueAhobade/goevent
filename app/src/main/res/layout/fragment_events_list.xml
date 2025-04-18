@@ -33,7 +33,6 @@
                     android:visibility="gone"/>
             </RelativeLayout>
 
-            <!-- "Plus populaires" -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -46,7 +45,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text="Plus populaires"
+                    android:text="Les plus proches de moi"
                     android:textStyle="bold"
                     android:textSize="18sp"
                     android:textColor="@color/black" />
@@ -69,7 +68,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" />
 
-            <!-- "Catégories" -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -82,7 +80,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text="Catégories"
+                    android:text="@string/all_event_label"
                     android:textStyle="bold"
                     android:textSize="18sp"
                     android:textColor="@color/black" />
@@ -91,7 +89,7 @@
                     android:id="@+id/btnVoirPlusCategories"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Voir plus"
+                    android:text="@string/see_more_label"
                     android:textColor="@color/orange"
                     android:textSize="14sp"
                     android:padding="4dp"
@@ -108,7 +106,6 @@
         </LinearLayout>
     </ScrollView>
 
-    <!-- Vue carte -->
     <LinearLayout
         android:id="@+id/view2"
         android:layout_width="match_parent"

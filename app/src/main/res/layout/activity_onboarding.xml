@@ -4,7 +4,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white">
 
-    <!-- ViewPager2 pour le défilement horizontal -->
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
@@ -15,7 +14,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Indicateurs et boutons -->
     <LinearLayout
         android:id="@+id/buttonsLayout"
         android:layout_width="match_parent"
@@ -25,7 +23,6 @@
         android:paddingBottom="50dp"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <!-- Indicateurs (points) -->
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
             android:layout_width="wrap_content"
@@ -34,8 +31,6 @@
             app:tabSelectedTextColor="@color/orange"
             app:tabTextColor="@color/gris_text"
             android:layout_gravity="center" />
-
-        <!-- Boutons -->
 
         <Button
             android:id="@+id/btnNext"
@@ -50,7 +45,7 @@
             android:id="@+id/btnSkip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Skip"
+            android:text="@string/btn_skip"
             android:textColor="@color/gris_text"
             android:layout_marginTop="10dp" />
     </LinearLayout>

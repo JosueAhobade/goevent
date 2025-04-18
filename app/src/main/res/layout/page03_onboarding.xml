@@ -19,7 +19,7 @@
         android:id="@+id/titleOnboarding"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/onboarding_title"
+        android:text="@string/onboarding_title_3"
         style="@style/TitleText"
         android:layout_marginBottom="15dp"/>
 
@@ -29,7 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="@string/onboarding_description" />
+        android:text="@string/onboarding_desc_3" />
 
 
 </LinearLayout>

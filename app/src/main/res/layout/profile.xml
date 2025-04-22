@@ -1,0 +1,59 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="24dp"
+    android:background="@color/white">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:navigationIcon="@drawable/ic_arrow_back_foreground"
+        app:title="Profile"
+        app:titleTextColor="@android:color/black" />
+
+    <!-- Layout Infos Utilisateur -->
+    <LinearLayout
+        android:id="@+id/user_info_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nom : John Doe"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:fontFamily="@font/sen_bold" />
+
+        <TextView
+            android:id="@+id/user_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email : john.doe@email.com"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <!-- Tu peux ajouter plus de détails ici -->
+    </LinearLayout>
+
+    <!-- Bouton Se Connecter -->
+    <Button
+        android:id="@+id/login_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Se connecter"
+        android:layout_centerInParent="true"
+        android:backgroundTint="@color/orange"
+        android:textColor="@color/white"
+        android:textAllCaps="false"
+        android:fontFamily="@font/sen_bold" />
+
+</RelativeLayout>

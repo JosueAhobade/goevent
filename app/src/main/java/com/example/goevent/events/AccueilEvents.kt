@@ -1,6 +1,7 @@
 package com.example.goevent.events
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
@@ -21,7 +22,10 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.database.*
 import android.location.Geocoder
+import android.widget.Button
 import com.example.goevent.EventsListFragment
+import com.example.goevent.auth.Profile
+import com.example.goevent.auth.Signin
 import java.util.Locale
 
 class AccueilEvents : AppCompatActivity() {
@@ -43,7 +47,15 @@ class AccueilEvents : AppCompatActivity() {
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
+        val btn_profile: Button = binding.buttonProfile
+
         checkLocationPermission()
+
+        btn_profile.setOnClickListener {
+            val intent = Intent(this, Profile::class.java)
+            startActivity(intent)
+        }
+
     }
 
     override fun onResume() {

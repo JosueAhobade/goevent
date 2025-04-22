@@ -3,23 +3,22 @@ package com.example.goevent.auth
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.goevent.R
 
-class Signin: AppCompatActivity() {
+class Signup: AppCompatActivity() {
     @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.test_login)
+        setContentView(R.layout.signup)
 
-        val signupButton = findViewById<TextView>(R.id.signup)
+        val signinButton = findViewById<TextView>(R.id.login)
 
-        signupButton.setOnClickListener {
-            val intent = Intent(this, Signup::class.java)
+        signinButton.setOnClickListener {
+            val intent = Intent(this, Signin::class.java)
             startActivity(intent)
         }
     }

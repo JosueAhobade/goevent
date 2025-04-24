@@ -74,6 +74,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/username"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:hint="Username"
@@ -88,10 +89,12 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/email_input"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:hint="Email"
-                        android:textColorHint="@color/black" />
+                        android:textColorHint="@color/black"
+                        android:inputType="textEmailAddress"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <!-- Password field -->
@@ -102,10 +105,12 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/password"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:hint="Password"
-                        android:textColorHint="@color/black" />
+                        android:textColorHint="@color/black"
+                        android:inputType="textPassword"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <!-- Confirm Password field -->
@@ -116,6 +121,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/confirm_password"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:hint="Confirm Password"

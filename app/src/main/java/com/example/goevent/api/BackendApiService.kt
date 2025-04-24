@@ -9,5 +9,5 @@ interface BackendApiService {
     fun signup(@Body user: UserRequest): Call<UserResponse>
 
     @POST("login")
-    fun login(@Body user: UserRequest): Call<Map<String, Any>>
+    fun login(@Body user: UserRequest): Call<UserResponse>
 }

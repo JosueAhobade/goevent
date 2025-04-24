@@ -1,6 +1,7 @@
 package com.example.goevent.auth
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
@@ -46,7 +47,14 @@ class Signin: AppCompatActivity() {
                 BackendClient.instance.login(userLogin).enqueue(object : Callback<UserResponse> {
                     override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                         if (response.isSuccessful) {
+
                             val userResponse = response.body()
+
+                            val editor = getSharedPreferences("user_session", Context.MODE_PRIVATE).edit()
+                            editor.putString("username", userResponse?.username)
+                            editor.putString("email", userResponse?.email)
+                            editor.apply()
+
                             Toast.makeText(this@Signin, "Bienvenue ${userResponse?.username}", Toast.LENGTH_LONG).show()
 
                             // Redirige vers HomeActivity ou une autre

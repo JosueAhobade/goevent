@@ -1,6 +1,6 @@
 # 📱 GoEvent – Application mobile de découverte d'événements
 
-**GoEvent** est une application mobile Android permettant aux utilisateurs de découvrir facilement des événements (concerts, festivals, expositions...) autour de leur localisation. Elle repose sur un backend développé en **FastAPI** et une base de données **PostgreSQL** pour la gestion des utilisateurs et des événements.
+**GoEvent** est une application mobile Android permettant aux utilisateurs de découvrir facilement des événements (concerts, festivals, expositions...) autour de leur localisation. Elle repose sur un backend développé en **FastAPI** et une base de données **PostgreSQL** pour la gestion des utilisateurs et des événements.Tous les évenement ont été recupérés grâce à l'Api data culture.
 
 ---
 
@@ -9,10 +9,8 @@
 - 🔐 Authentification sécurisée (inscription / connexion)
 - 📍 Géolocalisation des événements
 - 📅 Affichage des dates, adresses et distances
-- 🔔 Notifications personnalisées
 - 🌐 Multilingue : Français 🇫🇷 / Anglais 🇬🇧
 - 📡 Connexion à une API REST (FastAPI)
-- 🧠 Filtrage intelligent selon les préférences
 
 ---
 
@@ -42,7 +40,7 @@
 
 1. Cloner ce dépôt :
    ```bash
-   git clone https://github.com/votre-utilisateur/goevent.git
+   git clone https://github.com/JosueAhobade/goevent.git
    ```
 
 2. Ouvrir le projet avec **Android Studio**.
@@ -61,7 +59,7 @@
 2. Créer et activer un environnement virtuel :
    ```bash
    python -m venv env
-   source env/bin/activate  # ou `env\Scripts\activate` sur Windows
+   source env/bin/activate 
    ```
 
 3. Installer les dépendances :
